@@ -56,6 +56,8 @@ public class Hackerman : MonoBehaviour
     IEnumerator LateStart()
     {
         yield return new WaitForEndOfFrame();
+        myInputField.onDeselect.AddListener(delegate { myInputField.ActivateInputField(); });
+        myInputField.onEndEdit.AddListener(delegate { myInputField.ActivateInputField(); });
         myInputField.onValueChanged.AddListener(delegate { EditPassValues(); });
         myInputField.onSubmit.AddListener(delegate { CheckPassword(); });
         myInputField.ActivateInputField();
@@ -95,7 +97,7 @@ public class Hackerman : MonoBehaviour
         {
             Regex r = new(@"(?>)" + Regex.Escape(c.text.ToString()));
             currentLetters += c.text;
-            Debug.Log(r.Matches(password).Count);
+            
             if (r.Matches(currentLetters).Count <= r.Matches(password).Count)
             {
                 bool isInPlace = false;

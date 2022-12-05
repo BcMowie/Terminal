@@ -61,7 +61,7 @@ namespace FileSystem
 
     public class File
     {
-        public string name, path, content = "test", extension;
+        public string name, path, content, extension;
         public bool isAdminProtected = false;
         public File(string name, string extension, string path)
         {
@@ -219,10 +219,6 @@ namespace FileSystem
             else
                 file = new File(name, extension, path, content, isProtected);
 
-            Debug.Log("Hmmm...Filename: " + name + " path: " + path.Substring(0, path.IndexOf(path.Split('\\')[^2])) + path.Split('\\')[^2]+"\\");
-
-            Debug.Log("hymymymymym" + path.Substring(0, path.IndexOf(path.Split('\\')[^2])) + "," + path.Split('\\')[^2] + "\\");
-
             Directories.Find(x => file.path == x.path + x.name).files.Add(file);
 
             return file;
@@ -315,7 +311,7 @@ namespace FileSystem
 
                         name = file.name;
 
-                    Debug.Log(name);
+                    
 
 
                     while (newDir.files.Exists(x => x.name.ToLower() == name.ToLower() && x.extension == extension))
@@ -327,7 +323,7 @@ namespace FileSystem
                         }
                         /*name = name.Trim('\\') + "(Copy)";*/
 
-                        Debug.Log(r.Match(name).Value.Trim(new char[] { '(', ')', '\\' }));
+                        
                         int num = int.Parse(r.Match(name).Value.Trim(new char[] { '(', ')', '\\' }));
                         name = name.Remove(r.Match(name).Index);
                         name = name.Insert(name.Length, $"({(num + 1)})");

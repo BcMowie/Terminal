@@ -66,6 +66,7 @@ public class Mail : MonoBehaviour
     {
         inputField.text = "";
         display.text = "\n\n\t\tThe mail has been logged to your machine";
+        toLog = "";
         Regex ID = new Regex(@"(?<=ID: ).*?(?=(\\t))");
         if (machines.localMachine.fileSys.activeDirectory.files.Exists(x => x.name == "LOG" + ID.Match(mail.content).Value))
             return;

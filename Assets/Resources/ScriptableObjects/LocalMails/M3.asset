@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec4be87936a8a246ad0ac863d88da16, type: 3}
   m_Name: M3
   m_EditorClassIdentifier: 
-  myName: 177453
+  myName: 177323
   extension: txt
   path: Mail\
   content: 'ID: #177323\t\tFrom: Abaddon@jeffmail.com\n\nSubject: Thank You for your

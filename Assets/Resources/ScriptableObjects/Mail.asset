@@ -15,9 +15,8 @@ MonoBehaviour:
   myName: Mail
   extension: exe
   path: C:\
-  content: "MZ\x90 \x03   \x04   \xFF\xFF  \xB8       @                                  
-    \b\x01  \x0E\x1F\xBA\x0E \xB4\t\xCD!\xB8\x01L\xCD!This program cannot be run
-    in DOS mode.\r\r\n$       '\x10w:cq\x19icq\x19icq\x19i8\x19\x1Dhiq\x19i8\x19\x1Ahfq\x19i8\x19\x1Ch\xEBq\x19i8\x19\x18haq\x19ih\x1E\x1ChFq\x19ih\x1E\x1Dhsq\x19ih\x1E\x1Ahkq\x19i\xA5\x1E\x18h`q\x19icq\x18i6q\x19i\xA5\x1E\x1Chaq\x19i\xA5\x1E\x19hbq\x19i\xA5\x1E\xE6ibq\x19i\xA5\x1E\ehbq\x19iRichcq\x19i       
+  content: "MZ\xFF\xFF  \xB8       @                                     \xBA\xB4\xCD!\xB8\x01L\xCD!This
+    program cannot be run in DOS mode.\r\r\n$       'w:cqicqicqi8hiqi8hfqi8\xEBqi8haqihhFqihhsqihki\xA5h`qicqi6qi\xA5haqi\xA5hbqi\xA5\xE6ibqi\xA5hbqiRichcqi       
     PE  d\u2020\a \xAA\u01530b        \xF0 \" \v\x02\x0E\x19 \xA2   f\t     `\x12  
     \x10     @\x01    \x10   \x02  \x06       \x06        P\n  \x04      \x02 `\x81 
     \x10      \x10        \x10      \x10          \x10   \x90D\x01 \u02C6   \x18E\x01

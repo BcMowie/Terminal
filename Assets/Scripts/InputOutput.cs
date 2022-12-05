@@ -24,6 +24,8 @@ public class InputOutput : MonoBehaviour
         
         myInput.onValueChanged.AddListener(delegate { UpdateText(); });
         myInput.onSubmit.AddListener(delegate { AddText(myInput.text, true); if(myInput.text.Length > 0) previousCommands.Add(myInput.text); });
+        myInput.onDeselect.AddListener(delegate { myInput.ActivateInputField(); });
+        myInput.onEndEdit.AddListener(delegate { myInput.ActivateInputField(); });
         label = (string.IsNullOrEmpty(machines.activeMachine.label) ? machines.activeMachine.IP : machines.activeMachine.label);
         StartCoroutine(DelayedStart());
     }
@@ -35,7 +37,7 @@ public class InputOutput : MonoBehaviour
         inputText.text = $"({label}) {(machines.localMachine.activeDirectory.Length > 30 ? machines.localMachine.activeDirectory.Substring(0,10) + "..." + machines.localMachine.activeDirectory.Substring(machines.localMachine.activeDirectory.Length-16, 15) : machines.localMachine.activeDirectory)}><color=#4543B0>\u2588</color>" + myInput.text + "\u2588";
         myCaretPos = inputText.text.Length-1;
 
-
+        myInput.ActivateInputField();
         InvokeRepeating(nameof(CaretBlink), 0.001f, 0.7f);
         /*Debug.Log("Caret :" + myCaretPos);*/
 
@@ -56,8 +58,8 @@ public class InputOutput : MonoBehaviour
         inputText.transform.SetParent(gridObject.transform, false);
         inputText.text = $"({label}) {(machines.localMachine.activeDirectory.Length > 30 ? machines.localMachine.activeDirectory.Substring(0,10) + "..." + machines.localMachine.activeDirectory.Substring(machines.localMachine.activeDirectory.Length-16, 15) : machines.localMachine.activeDirectory)}><color=#4543B0>\u2588</color>";
 
-        if (inputText.rectTransform.anchoredPosition.y + gridObject.anchoredPosition.y < -510)
-            gridObject.anchoredPosition += new Vector2(0, -510 - (inputText.rectTransform.anchoredPosition.y + gridObject.anchoredPosition.y));
+        if (inputText.rectTransform.anchoredPosition.y + gridObject.anchoredPosition.y < -500)
+            gridObject.anchoredPosition += new Vector2(0, -500 - (inputText.rectTransform.anchoredPosition.y + gridObject.anchoredPosition.y));
 
         /*Debug.Log("CaretAdjust: " + (inputText.text.Length));*/
 
@@ -96,8 +98,8 @@ public class InputOutput : MonoBehaviour
         myInputLength = myInput.text.Length;
   
         inputText.text = inputText.text.Insert(myCaretPos, "\u2588");
-        if (inputText.rectTransform.anchoredPosition.y - inputText.preferredHeight + gridObject.anchoredPosition.y < -560)
-            gridObject.anchoredPosition += new Vector2(0, -505 + inputText.preferredHeight - (inputText.rectTransform.anchoredPosition.y + gridObject.anchoredPosition.y));
+        if (inputText.rectTransform.anchoredPosition.y - inputText.preferredHeight + gridObject.anchoredPosition.y < -500)
+            gridObject.anchoredPosition += new Vector2(0, -500 + inputText.preferredHeight - (inputText.rectTransform.anchoredPosition.y + gridObject.anchoredPosition.y));
 
 
     }
@@ -110,8 +112,8 @@ public class InputOutput : MonoBehaviour
         myCaretPos = inputText.text.Length;
         myInputLength = myInput.text.Length;
         inputText.text = inputText.text.Insert(myCaretPos, "\u2588");
-        if (inputText.rectTransform.anchoredPosition.y - inputText.preferredHeight + gridObject.anchoredPosition.y < -560)
-            gridObject.anchoredPosition += new Vector2(0, -505 + inputText.preferredHeight - (inputText.rectTransform.anchoredPosition.y + gridObject.anchoredPosition.y));
+        if (inputText.rectTransform.anchoredPosition.y - inputText.preferredHeight + gridObject.anchoredPosition.y < -500)
+            gridObject.anchoredPosition += new Vector2(0, -500 + inputText.preferredHeight - (inputText.rectTransform.anchoredPosition.y + gridObject.anchoredPosition.y));
     }
 
     public void ColorCharacter(Color32 color, int characterPos)
@@ -171,7 +173,7 @@ public class InputOutput : MonoBehaviour
             DestroyImmediate(gridObject.GetChild(0).gameObject);
         inputText.rectTransform.anchoredPosition = new Vector2(textBoxPrefab.transform.position.x, - offsetY);
         gridObject.anchoredPosition = new Vector2(-600, 505);
-
+        scrollValue = 0;
 
 
 

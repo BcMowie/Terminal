@@ -103,9 +103,12 @@ public class Machines : MonoBehaviour
             { "helpGeneric mv", " - moves a file or directory with all its contents to a specified directory"},
             { "helpGeneric dl", " - moves a file or directory with all its contents from a remote machine to a local one"},
             { "helpGeneric cp", " - copies a file or directory with all its contents to a specified directory"},
+            { "helpGeneric ip", " - moves to a machine with specified ip, or back to local machine" },
 
 
 
+
+            { "helpSpecific ip", " - moves to a machine with specified ip, or back to local machine\n" + " ip [IP]\n" + "ip [192.168.1.1] \t - allows moving back to local machine" },
             { "helpSpecific dl", " - moves a file or directory with all its contents from a remote machine to a local one\n" + " dl [NAME] [NAME]\n" + " dl [NAME] [\"NAME \'...\' \"]\n" + " dl [\"NAME \'...\' \"] [\"NAME \'...\' \"]\n" + " dl [NAME] [\"PATH\"]\n" + " dl [\"NAME \'...\' \"] [\"PATH\"]"},
             { "helpSpecific mv", " - moves a file or directory with all its contents to a specified directory\n" + " mv [NAME] [NAME]\n" + " mv [NAME] [\"NAME \'...\' \"]\n" + " mv [\"NAME \'...\' \"] [\"NAME \'...\' \"]\n" + " mv [NAME] [\"PATH\"]\n" + " mv [\"NAME \'...\' \"] [\"PATH\"]"},
             { "helpSpecific cp", " - copies a file or directory with all its contents to a specified directory\n" + " cp [NAME] [NAME]\n" + " cp [NAME] [\"NAME \'...\' \"]\n" + " cp [\"NAME \'...\' \"] [\"NAME \'...\' \"]\n" + " cp [NAME] [\"PATH\"]\n" + " cp [\"NAME \'...\' \"] [\"PATH\"]"},
@@ -113,7 +116,7 @@ public class Machines : MonoBehaviour
             { "helpSpecific md", " - makes a directory\n" + " md [NAME]\n" + " md [\"NAME \'...\' \"] "},
             { "helpSpecific txt", " - makes a .txt file\n" + " txt [NAME]\n" + " txt [NAME] [\"CONTENT\"]" },
             { "helpSpecific str", " - replaces a string in a text file\n" + " str [NAME] [\"STRING1\"] [\"STRING2\"]"},
-            { "helpSpecific stri", " - inserts a string in a text file at specified position\n" + " stri [NAME] [\"STRING\"]" + " stri [NAME] [\"STRING\"] [INDEX]\n" + " Index starts at 0, any overflow is clamped to end of text\n" + " Negative indexes are counted from the end of text"},
+            { "helpSpecific stri", " - inserts a string in a text file at specified position\n" + " stri [NAME] [\"STRING\"]\n" + " stri [NAME] [\"STRING\"] [INDEX]\n" + " Index starts at 0, any overflow is clamped to end of text\n" + " Negative indexes are counted from the end of text"},
             { "helpSpecific rd", " - prints a formated version of a text file\n" + "rd [NAME]\n"},
             { "helpSpecific ren", " - renames a file or directory\n" + " ren [\"NAME\"] [\"NEWNAME\"]\n" + " ren[\"NAME.EXT\"] [\"NEWNAME.EXT\"]"},
             { "helpSpecific cls", " - clears the screen" },
@@ -694,8 +697,8 @@ public class Machines : MonoBehaviour
                     {
                         replacedText = name.Substring(quotes[0].Index + 1, quotes[1].Index - quotes[0].Index - 1);
                         newText = name.Substring(quotes[2].Index + 1, quotes[3].Index - quotes[2].Index - 1);
-                        name = name.Split(' ')[0].ToLower();
-                        Debug.Log($"4*\", name: {name}, {replacedText} => {newText}");
+                        name = name.Split(' ')[0].Split('.')[0].ToLower();
+                        /*Debug.Log($"4*\", name: {name}, {replacedText} => {newText}");*/
                         break;
                     }
                 case 6:
@@ -703,7 +706,7 @@ public class Machines : MonoBehaviour
                         replacedText = name.Substring(quotes[2].Index + 1, quotes[3].Index - quotes[2].Index - 1);
                         newText = name.Substring(quotes[4].Index + 1, quotes[5].Index - quotes[4].Index - 1);
                         name = name.Split('\"')[1].Split('.')[0].ToLower();
-                        Debug.Log(name + ", " + replacedText + " => " + newText);
+                        /*Debug.Log(name + ", " + replacedText + " => " + newText);*/
                         break;
                     }
                 default:
@@ -774,7 +777,7 @@ public class Machines : MonoBehaviour
                         return;
                     }
             }
-            Debug.Log("index:" + index);
+            /*Debug.Log("index:" + index);*/
 
             if (fileSys.activeDirectory.files.Exists(x => x.name.ToLower() == name && x.extension == "txt"))
             { 
@@ -790,7 +793,7 @@ public class Machines : MonoBehaviour
                 {
                     index = (file.content.Length + i % (file.content.Length > 0 ? file.content.Length : 1)).ToString();
                 }
-                Debug.Log(index);
+                
    
                 file.content = file.content.Insert(Int32.TryParse(index, out i) ? i : 0, newText);
                 
@@ -816,11 +819,10 @@ public class Machines : MonoBehaviour
                 return;
             }
             if (name.Split('\"').Length == 1)
-                name = name.ToLower().Split(' ')[0];
+                name = name.ToLower().Split(' ')[0].Split(".txt")[0];
             else
-                name = name.ToLower().Split('\"')[1];
-            if (name.Split('.').Length > 1)
-                ext = name.ToLower().Split('.')[1];
+                name = name.ToLower().Split('\"')[1].Split(".txt")[0];
+
 
             if (ext == "txt" && fileSys.activeDirectory.files.Exists(x => x.name.ToLower() == name && x.extension == "txt"))
             {
@@ -929,7 +931,7 @@ public class Machines : MonoBehaviour
 
                 GameObject hackerman = Instantiate(Resources.Load("Hackerman") as GameObject);
                 hackerman.transform.SetParent(GameObject.Find("Canvas").transform,false);
-                Debug.Log("kurwo jebana" + localMachine.fileSys.Directories.Find(x => x.path == "C:\\" && x.name == "users\\").files.Find(x => x.extension == "doc" && x.isAdminProtected).content);
+                
                 hackerman.transform.Find("HackermanText").GetComponent<Hackerman>().password = localMachine.fileSys.Directories.Find(x=> x.path == "C:\\" && x.name == "users\\").files.Find(x => x.extension == "doc" && x.isAdminProtected).content;
 
                 while(hackerman != null)
